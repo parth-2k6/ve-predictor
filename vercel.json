@@ -9,10 +9,6 @@
     {
       "src": "/api/predict",
       "dest": "/api/predict.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/public/$1"
     }
   ]
 }
