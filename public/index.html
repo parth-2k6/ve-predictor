@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Excess Molar Volume Predictor</title>
+</head>
+<body>
+  <h1>Thermodynamic Predictor</h1>
+  <form onsubmit="submitForm(event)">
+    <label>Feature (JSON):</label><br>
+    <input type="text" id="featureInput" placeholder='{"features":[1.0, 2.0, 3.0]}' style="width:300px"><br><br>
+    <button type="submit">Predict</button>
+  </form>
+  <p>Prediction: <span id="result"></span></p>
+
+  <script>
+    async function submitForm(e) {
+      e.preventDefault();
+      const inputText = document.getElementById('featureInput').value;
+      try {
+        const data = JSON.parse(inputText);
+        const res = await fetch('/api/predict', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const result = await res.json();
+        document.getElementById('result').innerText = result.prediction;
+      } catch (err) {
+        document.getElementById('result').innerText = "Invalid input or prediction failed.";
+      }
+    }
+  </script>
+</body>
+</html>
